@@ -4,6 +4,7 @@ export interface Profile {
 }
 
 export interface Post {
+  likes_count: any;
   id: number | string;
   user_id: string;
   profile?: Profile;

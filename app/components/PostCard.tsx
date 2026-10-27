@@ -3,11 +3,11 @@ import { getTimeAgo } from "../utils/time";
 import HeartIcon from "./Hearticon";
 import { Post, PostCardProps } from "../types";
 
-const DEFAULT_AVATAR = "/blank-profile-picture.webp"
+const DEFAULT_AVATAR = "/silver.jfif"
 
 export default function PostCard({ post, onLike }: PostCardProps) {
 
-  const username = post.profile?.username || "default user"
+  const username = post.profile?.username || "Itzeeee46"
   const avatarUrl = post.profile?.avatar_url || DEFAULT_AVATAR
 
   return (
