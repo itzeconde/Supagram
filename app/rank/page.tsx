@@ -3,10 +3,9 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Modal from "../components/Modal";
-import HeartIcon from "../components/Hearticon";
+import { HeartIcon } from "../components/Hearticon";
 import { supabase } from "../lib/supabase";
 import { Post } from "../types";
-
 
 export default function RankPage() {
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
@@ -18,9 +17,9 @@ export default function RankPage() {
       // 1. Obtener posts
       const { data: postsData, error: postsError } = await supabase
         .from("posts")
-        .select("id, image_url, caption, likes, user_id, created_at")
-        .gt("likes", 5)
-        .order("likes", { ascending: false });
+        .select("id, image_url, caption, likes_count, user_id, created_at")
+        .gt("likes_count", 5)
+        .order("likes_count", { ascending: false });
 
       if (postsError) {
         console.error("Error al obtener los posts:", postsError);
@@ -68,7 +67,7 @@ export default function RankPage() {
       {/* Grid de posts */}
       <main className="max-w-2xl mx-auto p-2">
         <div className="grid grid-cols-3 gap-1">
-          {[...posts].sort((a, b) => b.likes - a.likes).map((post) => (
+          {[...posts].sort((a, b) => b.likes_count - a.likes_count).map((post) => (
             <button
               key={post.id}
               onClick={() => setSelectedPost(post)}
@@ -76,7 +75,7 @@ export default function RankPage() {
             >
               <Image
                 src={post.image_url}
-                alt={`Post con ${post.likes} likes`}
+                alt={`Post con ${post.likes_count} likes`}
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
               />
@@ -84,7 +83,7 @@ export default function RankPage() {
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
                 <HeartIcon filled={true} />
                 <span className="text-white font-semibold">
-                  {post.likes.toLocaleString()}
+                  {post.likes_count.toLocaleString()}
                 </span>
               </div>
             </button>
